@@ -68,7 +68,8 @@ def main():
 
     plt.legend(['f(x)', 'P1(x)', 'P2(x)', 'P3(x)'])
     plt.axis([np.pi/12, 5 * np.pi/12, 0, 10])
-    plt.show()
+
+    plt.savefig('q1.png', dpi=300)
 
     return 0
 
