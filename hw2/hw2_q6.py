@@ -11,67 +11,32 @@ import numpy as np
 
 PLOT_STEPS = 1000
 
-def newton(f, df, x0, N):
+def Newton(f, df, x0, N):
+    if N == 0:
+        return x0
 
+    prev = Newton(f, df, x0, N - 1)
 
-def compute_taylor(x, n):
-    size = len(x)
-    out = np.zeros(size)
-
-    assert(n >= 0 and n <= 3)
-
-    for i in range(size):
-        # f(pi/4) = 3tan(pi/4)
-        out[i] = 3.0
-
-        if n > 0:
-            # f'(pi/4) = 3sec^2(pi/4)
-            out[i] += 6 * (x[i] - np.pi / 4)
-
-            if n > 1:
-                # f''(pi/4) = 6tan(pi/4)sec^2(pi/4) = 12
-                out[i] += 6 * (x[i] - np.pi / 4) ** 2
-
-                if n > 2:
-                    # f'''(pi/4) = 6(sec^4(pi/4) + 2tan^2(pi/4) sec^2(pi/4)) = 48
-                    out[i] += 8 * (x[i] - np.pi / 4) ** 3
-
-    return out
+    return prev - f(prev)/df(prev)
 
 def main():
-    matplotlib.rcParams.update({
-        'font.size': 14,
-        'font.family': 'serif',
-        'text.usetex': 'true',
-    })
-
-    x = np.linspace(np.pi / 12.0, 5 * np.pi / 12, PLOT_STEPS)
-
     def f(x):
-        return 3 * np.tan(x)
+        return np.e ** x - x ** 2 + 3 * x - 2
 
-    y = f(x)
+    def df(x):
+        return np.e ** x - 2 * x + 3
 
-    p1 = compute_taylor(x, 1)
-    p2 = compute_taylor(x, 2)
-    p3 = compute_taylor(x, 3)
+    n = 0
+    while True:
+        res = Newton(f, df, -0.5, n)
 
-    plt.figure(1)
-    plt.clf()
-    plt.grid()
-    plt.title('Taylor polynomial approximations of f(x) = 3 tan(x)')
+        print('n={0}, res = {1}, f(res) = {2}'.format(n, res, f(res)))
 
-    plt.plot(x, y, 'r-')
-    plt.plot(x, p1, 'g-')
-    plt.plot(x, p2, 'b-')
-    plt.plot(x, p3, 'c-')
+        if abs(f(res)) < 10 ** -12:
+            print('Found sufficiently large n={0} => x_n = {1}, f(x_n) = {2}'.format(n, res, f(res)))
+            break
 
-    plt.xlabel('x')
-    plt.ylabel('y')
-
-    plt.legend(['f(x)', 'P1(x)', 'P2(x)', 'P3(x)'])
-    plt.axis([np.pi/12, 5 * np.pi/12, 0, 10])
-    plt.show()
+        n += 1
 
     return 0
 
