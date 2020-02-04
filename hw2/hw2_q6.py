@@ -5,11 +5,7 @@
 # Feb 4, 2020
 
 import sys
-import matplotlib
-import matplotlib.pylab as plt
 import numpy as np
-
-PLOT_STEPS = 1000
 
 def Newton(f, df, x0, N):
     if N == 0:
@@ -17,7 +13,7 @@ def Newton(f, df, x0, N):
 
     prev = Newton(f, df, x0, N - 1)
 
-    return prev - f(prev)/df(prev)
+    return prev - f(prev) / df(prev)
 
 def main():
     def f(x):
