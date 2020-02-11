@@ -43,7 +43,7 @@ def main():
         return 2 * t * (1 + u)
 
     # (problem 5)
-    actual = np.e ** 4
+    actual = np.e ** 4 - 1
     elist = [0] * 12
     for m in range(1, 11):
         k = 0.1 * (2 ** -m)
@@ -51,6 +51,7 @@ def main():
         elist[m] = np.abs(actual - U[-1])
 
         print('===> k: {0}'.format(k))
+        print('UN = {0}'.format(U[-1]))
         print('Ek = {0}'.format(elist[m]))
         print('E2k/Ek = {0}'.format(elist[m-1]/elist[m]))
 
