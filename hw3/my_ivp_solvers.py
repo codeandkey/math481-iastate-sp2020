@@ -12,10 +12,6 @@ def euler_k(f, eta, T, k):
     return euler(f, eta, T, int(T / k))
 
 def euler(f, eta, T, N):
-    # Assuming the problem intends to have t and U return values be arrays.
-    # Returning a single ordered pair wouldn't make any sense, as 0 <= t <= T which is passed
-    # as an argument to the function..
-
     k = T / N
 
     t = [0]
